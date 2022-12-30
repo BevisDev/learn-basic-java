@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<ul>
+    <!--    like th:text="${}"  -->
+    <li>HO TEN: [[${u.getFullname()}]]</li>
+    <li>MA: [[${u.id}]]</li>
+    <li>LUONG: [[${u.getSalary()}]]</li>
+</ul>
+
+<ul th:object="${u}">
+    <li>HO TEN: [[*{fullname}]]</li>
+    <li>MA: [[*{id}]]</li>
+    <li>LUONG: [[*{salary}]]</li>
+
+    <li>LUONG: [[${ss}]] va [[${xy}]]</li>
+</ul>
+
+</body>
+</html>
+

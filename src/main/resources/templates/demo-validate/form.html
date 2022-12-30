@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<h4 th:text="${message}"></h4>
+<form th:object="${student}" action="/account/save" method="post">
+    <input th:field="*{email}" placeholder="Email?">
+    <i th:errors="*{email}"></i> <br>
+
+    <input th:field="*{fullname}" placeholder="Full Name?">
+    <i th:errors="*{fullname}"></i> <br>
+
+    <input th:field="*{marks}" placeholder="Marks?"><br>
+    <i th:errors="*{marks}"></i> <br>
+
+    <input th:field="*{gender}" th:value="false" type="radio">Female
+    <input th:field="*{gender}" th:value="true" type="radio">Male
+    <i th:errors="*{gender}"></i> <br>
+
+    <select th:field="*{country}">
+        <th:block th:each="e : ${countries}">
+            <option th:value="${e.key}" th:text="${e.value}"></option>
+        </th:block>
+    </select>
+    <i th:errors="*{country}"></i> <br>
+    <hr>
+    <button>Save</button>
+</form>
+</body>
+</html>

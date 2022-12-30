@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<nav th:fragment="menu">
+    <a href="/i18n/index" th:text="#{menu.home}"></a>
+    <a href="/i18n/about" th:text="#{menu.about}"></a>
+    <a href="/i18n/contact" th:text="#{menu.contact}"></a>
+
+    ::
+    <a href="?lang=en">English</a>
+    <a href="?lang=vi">Tiếng Việt</a>
+    <script src="https://ajax.googleapis.com//ajax/lib/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("a[href*=lang]").click(function () {
+                let url = $(this).attr("href");
+                $.get(url).then(resp => location.reload());
+                return false;
+            });
+        });
+    </script>
+    <nav xmlns:th="http://www.thymeleaf.org">
+        <a th:each="c : ${cate}" href="" th:text="${c.name}"></a> |
+    </nav>
+
+</nav>
+</body>
+</html>
+

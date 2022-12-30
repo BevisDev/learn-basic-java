@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<ul>
+    <!--   #request from server -->
+    <li th:text="${#request.getServerPort()}"></li>
+    <li th:text="${#request.serverPort}"></li>
+    <li th:text="${#request.getRequestURI()}"></li>
+    <li th:text="${#request.requestURI}"></li>
+</ul>
+<!-- for list from server -->
+<th:block th:each="staff : ${list}">
+    <!--    keep object -->
+    <ul th:object="${staff}">
+        <li th:text="*{getGrade()}"></li>
+        <li th:text="*{grade}"></li>
+        <li th:text="*{id}"></li>
+        <li th:text="*{fullname}"></li>
+
+        <!--        format number -->
+        <li th:text="*{#numbers.formatDecimal(marks,0,'WHITESPACE',2,'POINT')}"></li>
+        <th:block th:switch="*{gender}">
+            <li th:case="true">Male</li>
+            <li th:case="*">Female</li>
+        </th:block>
+
+        <!--        format date-->
+        <li th:text="*{#dates.format(birthday,'dd-MM/yyyy')}"></li>
+
+        <li th:if="*{marks >= 5}">Dat</li>
+        <li><a th:href="@{|/staff/detail/*{id}|}"> ChiTiet</a></li>
+        <li th:text="*{gender? 'Male':'Female'}"></li>
+    </ul>
+</th:block>
+</body>
+</html>
+
