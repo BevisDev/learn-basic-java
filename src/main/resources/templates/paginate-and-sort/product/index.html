@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="area(view)">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<h1>Filter By Price</h1>
+<hr>
+<hr>
+<form action="/paginate/product/index" method="post">
+    <input name="min" th:value="${param.min}" placeholder="Min price">
+    <input name="max" th:value="${param.max}" placeholder="Max price">
+    <button>SEARCH</button>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th>NO.</th>
+        <th>Name</th>
+        <th>UnitPrice</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item, state : ${list}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.unitPrice}"></td>
+    </tr>
+    <!--    <tr th:each="item, state : ${page.content}">-->
+    <!--        <td th:text="${page.number* page.size + state.count}"></td>-->
+    <!--        <td th:text="${item.name}"></td>-->
+    <!--        <td th:text="${item.unitPrice}"></td>-->
+    <!--    </tr>-->
+    </tbody>
+</table>
+<!-- keep url to reuse , set name is base-->
+<!--<ul th:with="base='/paginate/product/index'">-->
+<!--    <li><a th:href="@{|${base}/0|}">First</a></li>-->
+<!--    <li><a th:href="@{|${base}/${page.number -1}|}">Previous</a></li>-->
+<!--    <li><a th:href="@{|${base}/${page.number +1}|}">Next</a></li>-->
+<!--    <li><a th:href="@{|${base}/${page.totalPages -1}|}">Last</a></li>-->
+<!--</ul>-->
+</body>
+</html>
