@@ -1,5 +1,6 @@
 package com.learnbasicjava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,11 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     List<OrderDetail> orderDetails;
+
+    public Product(Integer id, String name, Double unitPrice) {
+        this.id = id;
+        this.name = name;
+        this.unitPrice = unitPrice;
+    }
+
 }

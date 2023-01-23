@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<h1>SORT giảm xuống</h1>
+<hr>
+<table class="table">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th><a th:href="@{|/paginate/account/sort/username/${dir}|}">Username</a></th>
+        <th><a th:href="@{|/paginate/account/sort/fullname/${dir}|}">Fullname</a></th>
+        <th><a th:href="@{|/paginate/account/sort/email/${dir}|}">Email</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item, state : ${items}">
+        <td th:text="${page.number * page.size + state.count}"></td>
+        <td th:text="${item.username}">/td>
+        <td th:text="${item.fullname}"></td>
+        <td th:text="${item.email}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+

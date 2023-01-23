@@ -1,21 +1,23 @@
 package com.learnbasicjava.controller;
 
 import com.learnbasicjava.dao.CategoryDAO;
+import com.learnbasicjava.dao.ProductDAO;
 import com.learnbasicjava.entity.Category;
 import com.learnbasicjava.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/jpa")
 public class DemoJPAController {
     @Autowired
     CategoryDAO cdao;
+
+    @Autowired
+    ProductDAO productDAO;
 
     @GetMapping("/find-all")
     public void findAll() {
@@ -59,4 +61,21 @@ public class DemoJPAController {
     public void delete() {
         cdao.deleteById(1009);
     }
+
+    /**
+     * use native query to offset fetch next
+     *
+     * @return
+     */
+    @RequestMapping("/test")
+    @ResponseBody
+    public List<Product> index1() {
+        List<Product> list = productDAO.findAllProductByUnitPrice()
+                .stream().map(prod -> {
+                    return new Product(prod.getId(), prod.getName(), prod.getUnitPrice());
+                }).collect(Collectors.toList());
+        System.out.println(list);
+        return list;
+    }
+
 }

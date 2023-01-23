@@ -25,24 +25,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="item, state : ${list}">
-        <td th:text="${state.count}"></td>
-        <td th:text="${item.name}"></td>
-        <td th:text="${item.unitPrice}"></td>
-    </tr>
-    <!--    <tr th:each="item, state : ${page.content}">-->
-    <!--        <td th:text="${page.number* page.size + state.count}"></td>-->
+    <!-- JPA with sort param -->
+    <!--    <tr th:each="item, state : ${list}">-->
+    <!--        <td th:text="${state.count}"></td>-->
     <!--        <td th:text="${item.name}"></td>-->
     <!--        <td th:text="${item.unitPrice}"></td>-->
     <!--    </tr>-->
+
+    <tr th:each="item, state : ${page.content}">
+        <!-- Get no number when move to page 2, other.. -->
+        <td th:text="${page.number* page.size + state.count}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.unitPrice}"></td>
+    </tr>
     </tbody>
 </table>
 <!-- keep url to reuse , set name is base-->
-<!--<ul th:with="base='/paginate/product/index'">-->
-<!--    <li><a th:href="@{|${base}/0|}">First</a></li>-->
-<!--    <li><a th:href="@{|${base}/${page.number -1}|}">Previous</a></li>-->
-<!--    <li><a th:href="@{|${base}/${page.number +1}|}">Next</a></li>-->
-<!--    <li><a th:href="@{|${base}/${page.totalPages -1}|}">Last</a></li>-->
-<!--</ul>-->
+<ul th:with="base='/paginate/product/index'">
+    <li><a th:href="@{|${base}/0|}">First</a></li>
+    <li><a th:href="@{|${base}/${page.number -1}|}">Previous</a></li>
+    <li><a th:href="@{|${base}/${page.number +1}|}">Next</a></li>
+    <li><a th:href="@{|${base}/${page.totalPages -1}|}">Last</a></li>
+</ul>
 </body>
 </html>

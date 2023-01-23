@@ -15,7 +15,9 @@ public class LayoutInterceptor implements HandlerInterceptor {
     @Autowired
     CategoryDAO dao;
 
+    // pre appearance when before controller excutes
     // post appearance when controller excutes finish
+    // afterComplete when view excutes finish handle afterComplete before response
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<h1>Paginate</h1>
+<hr>
+<table class="table">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>UserName</th>
+        <th>Fullname</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <tr th:each="item, state : ${page.content}">
+        <td th:text="${page.number * page.size + state.count}"></td>
+        <td th:text="${item.username}">/td>
+        <td th:text="${item.fullname}"></td>
+        <td th:text="${item.email}"></td>
+    </tr>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4" th:with="base='/paginate/account/paginate'">
+            <!--Xử lí nếu ở trang đầu thì Ẩn nút về đầu page.first-->
+            <!-- if page first => hide -->
+            <a th:if="${!page.first}" th:href="@{|${base}/${0}|}">First</a>
+
+            <!-- xử lí nếu trang đầu, pre thì qua trang cuối -->
+            <!-- page.number == 0, click vao => trang cuoi cung` else page.nubmer - 1 -->
+            <a th:href="@{|${base}/${page.number == 0 ? page.totalPages -1 : page.number -1}|}">Prev</a>
+
+            <!-- xử lí nếu trang cuối, next thì qua trang đầu -->
+            <!-- page.number == page cuoi cung`, click vao => trang 0 else page.nubmer + 1 -->
+            <a th:href="@{|${base}/${page.number == page.totalPages -1 ? 0 : page.number +1 }|}">Next</a>
+
+            <!--Xử lí nếu ở trang cuối thì Ẩn nút về cuối-->
+            <!-- if la trang cuoi thi hide else vao trang cuoi -->
+            <a th:if="${not page.last}" th:href="@{|${base}/${page.totalPages -1}|}">Last</a>
+        </td>
+
+    </tr>
+    </tfoot>
+</table>
+<ul>
+    <li>Kích thước trang <b th:th:text="${page.size}">?</b></li>
+    <li>Trang thứ <b th:text="${page.number}">?</b></li>
+    <li>Tổng số trang <b th:text="${page.totalPages}">?</b></li>
+    <li>Số phần tử hiện có <b th:text="${page.numberOfElements}">?</b></li>
+    <li>Tổng số phần tử? <b th:text=${page.totalElements}>?</b></li>
+</ul>
+<ul>
+    <li>Trang đầu <b>0</b></li>
+    <li>Trang trước <b th:text=${page.number-1}>?</b></li>
+    <li>Trang sau: <b th:text=${page.number+1}>?</b></li>
+    <li>Trang cuối<b th:text=${page.totalPages-1}>?</b></li>
+</ul>
+</body>
+</html>
+

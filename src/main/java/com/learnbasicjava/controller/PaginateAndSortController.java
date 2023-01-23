@@ -11,9 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,56 +33,64 @@ public class PaginateAndSortController {
      * @param model
      * @return
      */
-    @RequestMapping("/product/index")
-    public String sortIndex(Model model) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "name");
-        List<Product> list = productDAO.findAll(sort);
-        model.addAttribute("list", list);
-        return "/paginate-and-sort/product/index";
-    }
-
-//    @RequestMapping({"/product/index", "/product/index/{n}"})
-//    public String index(Model model,
-//                        @PathVariable("n") Optional<Integer> n,
-//                        @RequestParam("min") Optional<Double> minOpt,
-//                        @RequestParam("max") Optional<Double> maxOpt) {
-//        double min = minOpt.orElse(Double.MIN_VALUE);
-//        double max = maxOpt.orElse(Double.MAX_VALUE);
-//
-//        Pageable pageable = PageRequest.of(n.orElse(0), 5);
-//        Page<Product> page = productDAO.findAllByUnitPriceBetween(min, max, pageable);
-//        model.addAttribute("page", page);
+//    @GetMapping("/product/index")
+//    public String sortIndex(Model model) {
+//        Sort sort = Sort.by(Sort.Direction.DESC, "name");
+//        List<Product> list = productDAO.findAll(sort);
+//        model.addAttribute("list", list);
 //        return "/paginate-and-sort/product/index";
 //    }
 
-    @RequestMapping("/account/index")
-    public String index(Model model) {
-        List<Account> list = accountDAO.findAll();
-        model.addAttribute("items", list);
-        return "account/index";
-    }
-
-    @RequestMapping({"/account/sort", "/account/sort/{property}/{direction}"})
-    public String sort(Model model,
-                       @PathVariable("property") Optional<String> proOpt,
-                       @PathVariable("direction") Optional<Boolean> dirOpt) {
-        String pro = proOpt.orElse("username");
-        Boolean direction = dirOpt.orElse(true);
-        Sort sort = Sort.by(direction ? Sort.Direction.ASC : Sort.Direction.DESC, pro);
-        List<Account> list = accountDAO.findAll(sort);
-        model.addAttribute("items", list);
-        model.addAttribute("dir", !direction);
-        return "account/sort";
-    }
-
+    // ===================== MORE INFORMATION PAGNINATE ==========
     @RequestMapping({"/account/paginate", "/account/paginate/{n}"})
     public String paginate(Model model,
                            @PathVariable("n") Optional<Integer> numOpt) {
         Pageable pageable = PageRequest.of(numOpt.orElse(0), 5);
         Page<Account> page = accountDAO.findAll(pageable);
         model.addAttribute("page", page);
-        return "account/paginate";
+        return "/paginate-and-sort/account/paginate";
     }
+
+    @RequestMapping({"/product/index", "/product/index/{n}"})
+    public String index(Model model,
+                        @PathVariable("n") Optional<Integer> n,
+                        @RequestParam(value = "min", defaultValue = "0") Optional<Double> minOpt,
+                        @RequestParam("max") Optional<Double> maxOpt) {
+        double min = minOpt.orElse(Double.MIN_VALUE);
+        double max = maxOpt.orElse(Double.MAX_VALUE);
+
+        Pageable pageable = PageRequest.of(n.orElse(0), 5);
+        Page<Product> page = productDAO.findAllByUnitPriceBetween(min, max, pageable);
+        model.addAttribute("page", page);
+        return "/paginate-and-sort/product/index";
+    }
+
+    // ===================== ADVANCED PAGINATE AND SORT ======================
+    @RequestMapping("/account/index")
+    public String index(Model model) {
+        List<Account> list = accountDAO.findAll();
+        model.addAttribute("items", list);
+        return "/paginate-and-sort/account/index";
+    }
+
+    @RequestMapping({"/account/sort", "/account/sort/{property}/{direction}"})
+    public String sort(Model model,
+                       @PathVariable("property") Optional<String> proOpt,
+                       @PathVariable("direction") Optional<Boolean> dirOpt) {
+        // get sort default username when first time go /account/sort
+        String pro = proOpt.orElse("username");
+        // default true
+        Boolean direction = dirOpt.orElse(true);
+        Sort sort = Sort.by(direction ? Sort.Direction.ASC : Sort.Direction.DESC, pro);
+        List<Account> list = accountDAO.findAll(sort);
+        model.addAttribute("items", list);
+
+        // return !dir if user want to click continues
+        model.addAttribute("dir", !direction);
+        return "/paginate-and-sort/account/sort";
+    }
+
+    // ============= Paginate and SORT same ==================
 
     @RequestMapping({"/account/paginate-with-sort",
             "/account/paginate-with-sort/{property}/{direction}/{n}"})
@@ -101,7 +107,7 @@ public class PaginateAndSortController {
         model.addAttribute("property", pro);
         model.addAttribute("page", page);
         model.addAttribute("dir", direction);
-        return "account/paginate-with-sort";
+        return "/paginate-and-sort/account/paginate-with-sort";
     }
 
 }
