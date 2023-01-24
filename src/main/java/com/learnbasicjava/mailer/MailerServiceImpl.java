@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class MailerServiceImpl implements MailerService {
 
     private List<Mail> list = new ArrayList<>();
@@ -21,6 +23,10 @@ public class MailerServiceImpl implements MailerService {
     public void queue(Mail mail) {
         list.add(mail);
     }
+
+    /**
+     *
+     */
 
     @Scheduled(fixedRate = 2000)
     public void run() {
