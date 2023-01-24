@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<ul>
+    <!-- return from demo 1 -->
+    <li>[[${#request.getAttribute('r1')}]]</li>
+    <!-- return from demo 2 -->
+    <li>[[${r2}]]</li>
+</ul>
+
+<ul>
+    <li>[[${#session.getAttribute('s1')}]]</li>
+    <li>[[${session.s2}]]</li>
+    <li>[[${s2}]]</li>
+</ul>
+
+<ul>
+    <li>[[${#servletContext.getAttribute('ap1')}]]</li>
+    <li>[[${application.ap2}]]</li>
+    <li>[[${ap2}]]</li>
+</ul>
+</body>
+</html>
