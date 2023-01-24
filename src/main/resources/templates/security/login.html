@@ -1,0 +1,9 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <i>[[${message}]]</i>
+    <form action="/spring/login" method="post">
+        <input name="username"> <input name="password"> <input
+            name="remember-me" type="checkbox">
+        <button>Login</button>
+    </form>
+    <a href="/oauth2/google">GOOGLE</a>
+</div>

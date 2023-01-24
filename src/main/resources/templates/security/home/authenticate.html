@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    Authentication
+    <ul th:object="${#authentication}">
+        <li th:text="*{name}"></li>
+        <li th:each="au : *{authorities}" th:text="${au}"></li>
+        <li th:text="*{authenticated}"></li>
+        <li th:text="*{principal}"></li>
+        <li th:text="*{principal.username}"></li>
+        <li th:text="*{principal.enabled}"></li>
+    </ul>
+    Request
+    <ul th:object="${#request}">
+        <li th:text="*{remoteUser}"></li>
+        <li th:each="au : *{userPrincipal.authorities}" th:text="${au}"></li>
+        <li th:text="*{isUserInRole('ADMIN')}"></li>
+        <li th:text="*{userPrincipal}"></li>
+        <li th:text="*{userPrincipal.principal.username}"></li>
+        <li th:text="*{userPrincipal.principal.enabled}"></li>
+    </ul>
+    Security
+    <ul>
+        <li sec:authentication="name"></li>
+        <li sec:authorize="isAuthenticated()"></li>
+        <li sec:authorize="hasRole('ADMIN')"></li>
+        <li sec:authorize="hasAnyRole('ADMIN','USER')"></li>
+    </ul>
+</div>
