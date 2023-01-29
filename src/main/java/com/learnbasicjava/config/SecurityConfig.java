@@ -32,9 +32,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("user3").password(getPasswordEncoder().encode("789")).roles("ADMIN", "USER");
 //    }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -74,5 +79,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/js/**", "/css/**", "/images/**");
     }
-    
+
 }

@@ -20,9 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     AccountDAO dao;
 
-    @Autowired
-    private PasswordEncoder pe;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
